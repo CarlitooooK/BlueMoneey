@@ -17,6 +17,7 @@ class BalanceScreen extends StatefulWidget {
 }
 
 class _BalanceScreenState extends State<BalanceScreen> {
+  int counterBtn = 0;
   double get totalGastos =>
       widget.gastos.fold(0, (sum, item) => sum + item.amount);
   double get totalIngresos =>
@@ -36,9 +37,39 @@ class _BalanceScreenState extends State<BalanceScreen> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: AppColors.secondaryColor,
+        backgroundColor: AppColors.backgroundStartScreen,
         child: const Icon(Icons.add),
-        onPressed: () => showAddOptions(),
+        onPressed: () {
+          if (counterBtn == 0) {
+            showDialog<String>(
+              animationStyle: AnimationStyle(
+                duration: Duration(milliseconds: 550),
+              ),
+              context: context,
+              builder: (BuildContext context) => AlertDialog(
+                title: const Text('Instrucciones'),
+                content: const Text(
+                  'Asegurese de subir los datos a la nube antes de salir de la app',
+                  style: TextStyle(fontSize: 18),
+                ),
+                actions: <Widget>[
+                  TextButton(
+                    onPressed: () => Navigator.pop(context, 'OK'),
+                    child: const Text(
+                      'OK',
+                      style: TextStyle(color: AppColors.textColor),
+                    ),
+                  ),
+                ],
+              ),
+            );
+            counterBtn = 1;
+          }
+
+          if (counterBtn == 1) {
+            showAddOptions();
+          }
+        },
       ),
     );
   }
@@ -79,44 +110,51 @@ class _BalanceScreenState extends State<BalanceScreen> {
       context: context,
       builder: (context) => AlertDialog(
         title: Text(isGasto ? "Nuevo Gasto" : "Nuevo Ingreso"),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            TextField(
-              controller: titleController,
-              decoration: const InputDecoration(labelText: "Título"),
-            ),
-            TextField(
-              controller: amountController,
-              decoration: const InputDecoration(labelText: "Monto"),
-              keyboardType: TextInputType.number,
-            ),
-            const SizedBox(height: 10),
-            DropdownButton<IconData>(
-              value: selectedIcon,
-              isExpanded: true,
-              items: const [
-                DropdownMenuItem(value: Icons.money, child: Text("Dinero")),
-                DropdownMenuItem(value: Icons.icecream, child: Text("Helado")),
-                DropdownMenuItem(
-                  value: Icons.card_giftcard,
-                  child: Text("Regalo"),
+        content: StatefulBuilder(
+          builder: (context, setState) {
+            return Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                TextField(
+                  controller: titleController,
+                  decoration: const InputDecoration(labelText: "Título"),
                 ),
-                DropdownMenuItem(value: Icons.people, child: Text("Gente")),
-                DropdownMenuItem(
-                  value: Icons.shopping_cart,
-                  child: Text("Carrito"),
+                TextField(
+                  controller: amountController,
+                  decoration: const InputDecoration(labelText: "Monto"),
+                  keyboardType: TextInputType.number,
+                ),
+                const SizedBox(height: 10),
+                DropdownButton<IconData>(
+                  value: selectedIcon,
+                  isExpanded: true,
+                  items: const [
+                    DropdownMenuItem(value: Icons.money, child: Text("Dinero")),
+                    DropdownMenuItem(
+                      value: Icons.icecream,
+                      child: Text("Helado"),
+                    ),
+                    DropdownMenuItem(
+                      value: Icons.card_giftcard,
+                      child: Text("Regalo"),
+                    ),
+                    DropdownMenuItem(value: Icons.people, child: Text("Gente")),
+                    DropdownMenuItem(
+                      value: Icons.shopping_cart,
+                      child: Text("Carrito"),
+                    ),
+                  ],
+                  onChanged: (icon) {
+                    if (icon != null) {
+                      setState(() {
+                        selectedIcon = icon;
+                      });
+                    }
+                  },
                 ),
               ],
-              onChanged: (icon) {
-                if (icon != null) {
-                  setState(() {
-                    selectedIcon = icon;
-                  });
-                }
-              },
-            ),
-          ],
+            );
+          },
         ),
         actions: [
           TextButton(

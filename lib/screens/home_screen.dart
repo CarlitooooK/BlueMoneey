@@ -62,28 +62,29 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       BalanceScreen(gastos: gastos, ingresos: ingresos),
       GraphicScreen(gastos: gastos, ingresos: ingresos),
-      const ListSuperScreen(),
+      ListSuperScreen(gastos: gastos),
     ];
 
     return Scaffold(
       body: pages[_selectedIndex],
       appBar: AppBar(
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: const Icon(Icons.logout),
-        ),
+        leading: Image.asset("assets/gifs/bluey2.gif"),
+        leadingWidth: 100,
         backgroundColor: AppColors.primaryColor,
         title: const Text("Blue Money"),
         centerTitle: true,
-        elevation: 0,
         actions: [
           IconButton(
             onPressed: () {
               uploadData();
             },
             icon: const Icon(Icons.cloud_upload_rounded, size: 30),
+          ),
+          IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: Icon(Icons.logout),
           ),
         ],
       ),

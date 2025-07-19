@@ -92,9 +92,7 @@ class _StartScreenState extends State<StartScreen> {
           // Animación
           SizedBox(
             height: 300, // Altura fija para la animación
-            child: Lottie.network(
-              "https://lottie.host/0299cdda-fba8-43ca-a5fd-0da211dfcd8b/th0GObha2Q.json",
-            ),
+            child: Image.asset("assets/gifs/bluey1.gif"),
           ),
 
           // Espaciado
@@ -151,7 +149,7 @@ class _StartScreenState extends State<StartScreen> {
                     icon: Icon(Icons.person, color: Colors.black),
                     color: Colors.grey,
                   ),
-                  hintText: 'Correo Electrónico',
+                  hintText: 'Usuario',
                   hintStyle: TextStyle(color: Colors.black),
                 ),
                 style: TextStyle(color: Colors.black, fontSize: 18),

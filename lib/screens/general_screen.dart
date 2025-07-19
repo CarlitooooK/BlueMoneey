@@ -188,7 +188,7 @@ class _GeneralScreenState extends State<GeneralScreen> {
           Container(
             padding: const EdgeInsets.all(20),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: AppColors.secondaryColor,
               borderRadius: BorderRadius.circular(20),
             ),
             child: Column(
@@ -200,6 +200,8 @@ class _GeneralScreenState extends State<GeneralScreen> {
                 const SizedBox(height: 10),
                 SfCircularChart(
                   legend: const Legend(
+                    borderColor: Colors.black,
+                    textStyle: TextStyle(fontSize: 14),
                     isVisible: true,
                     position: LegendPosition.bottom,
                   ),
