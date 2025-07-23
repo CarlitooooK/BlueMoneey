@@ -16,19 +16,9 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  List<MoneyItem> gastos = [
-    MoneyItem(icon: Icons.icecream, title: "Helado", amount: 20.00),
-  ];
+  List<MoneyItem> gastos = [];
 
-  List<MoneyItem> ingresos = [
-    MoneyItem(icon: Icons.icecream, title: "Helado", amount: 20.00),
-    MoneyItem(icon: Icons.people, title: "Salida Amigos", amount: 200.00),
-    MoneyItem(
-      icon: Icons.shopping_cart_rounded,
-      title: "Despensa",
-      amount: 800.00,
-    ),
-  ];
+  List<MoneyItem> ingresos = [];
 
   double get totalGastos => gastos.fold(0, (sum, item) => sum + item.amount);
   double get totalIngresos =>
@@ -37,8 +27,20 @@ class _HomeScreenState extends State<HomeScreen> {
   double get balance => totalIngresos - totalGastos;
 
   int _selectedIndex = 0;
+  PageController _pageController =
+      PageController(); // Controlador para PageView
 
   void navigateBottomBar(int index) {
+    // Animar hacia la página seleccionada
+    _pageController.animateToPage(
+      index,
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
+    );
+  }
+
+  void _onPageChanged(int index) {
+    // Actualizar el índice cuando se desliza
     setState(() {
       _selectedIndex = index;
     });
@@ -48,6 +50,12 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     loadData();
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose(); // Limpiar el controlador
+    super.dispose();
   }
 
   @override
@@ -66,7 +74,6 @@ class _HomeScreenState extends State<HomeScreen> {
     ];
 
     return Scaffold(
-      body: pages[_selectedIndex],
       appBar: AppBar(
         leading: Image.asset("assets/gifs/bluey2.gif"),
         leadingWidth: 100,
@@ -87,6 +94,12 @@ class _HomeScreenState extends State<HomeScreen> {
             icon: Icon(Icons.logout),
           ),
         ],
+      ),
+      body: PageView(
+        controller: _pageController,
+        onPageChanged: _onPageChanged,
+        physics: const BouncingScrollPhysics(), // Efecto de rebote al deslizar
+        children: pages,
       ),
       bottomNavigationBar: BottomNavigationBar(
         onTap: navigateBottomBar,

@@ -53,13 +53,13 @@ class _GraphicScreenState extends State<GraphicScreen> {
             Icons.arrow_circle_down,
             Colors.red,
           ),
-          graphicGastos(totalGastos),
+          _buildGastosChart(totalGastos),
           buildChartTitle(
             "Gráfica de Ingresos",
             Icons.arrow_circle_up,
             Colors.green,
           ),
-          graphicIngresos(totalIngresos),
+          _buildIngresosChart(totalIngresos),
         ],
       ),
     );
@@ -87,6 +87,84 @@ class _GraphicScreenState extends State<GraphicScreen> {
         ),
       ),
     );
+  }
+
+  Widget _buildGastosChart(double total) {
+    if (_gastosChartData.isEmpty) {
+      return Container(
+        height: 300,
+        margin: const EdgeInsets.all(20),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: const Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(Icons.insert_chart_outlined, size: 80, color: Colors.grey),
+              SizedBox(height: 20),
+              Text(
+                "Sin gastos para mostrar",
+                style: TextStyle(
+                  fontSize: 18,
+                  color: Colors.grey,
+                  fontStyle: FontStyle.italic,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(height: 10),
+              Text(
+                "Agrega algunos gastos para ver la gráfica",
+                style: TextStyle(fontSize: 14, color: Colors.grey),
+                textAlign: TextAlign.center,
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+
+    return graphicGastos(total);
+  }
+
+  Widget _buildIngresosChart(double total) {
+    if (_ingresosChartData.isEmpty) {
+      return Container(
+        height: 300,
+        margin: const EdgeInsets.all(20),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: const Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(Icons.insert_chart_outlined, size: 80, color: Colors.grey),
+              SizedBox(height: 20),
+              Text(
+                "Sin ingresos para mostrar",
+                style: TextStyle(
+                  fontSize: 18,
+                  color: Colors.grey,
+                  fontStyle: FontStyle.italic,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(height: 10),
+              Text(
+                "Agrega algunos ingresos para ver la gráfica",
+                style: TextStyle(fontSize: 14, color: Colors.grey),
+                textAlign: TextAlign.center,
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+
+    return graphicIngresos(total);
   }
 
   SfCircularChart graphicGastos(double total) {
@@ -136,6 +214,8 @@ class _GraphicScreenState extends State<GraphicScreen> {
           dataLabelMapper: (GDPData data, _) =>
               '${(data.gdp / total * 100).toStringAsFixed(1)}%',
           dataLabelSettings: const DataLabelSettings(isVisible: true),
+          pointColorMapper: (GDPData data, int index) =>
+              customColors[index % customColors.length],
           explode: true,
           explodeOffset: '15%',
           explodeIndex: _explodedIndexChart2,
@@ -178,6 +258,11 @@ class _GraphicScreenState extends State<GraphicScreen> {
     AppColors.buttonColor,
     Colors.deepOrange,
     Colors.indigo,
+    Colors.pink,
+    Colors.cyan,
+    Colors.orange,
+    Colors.brown,
+    Colors.grey,
   ];
 }
 

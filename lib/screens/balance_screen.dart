@@ -104,7 +104,7 @@ class _BalanceScreenState extends State<BalanceScreen> {
   void showAddDialog({required bool isGasto}) {
     final TextEditingController titleController = TextEditingController();
     final TextEditingController amountController = TextEditingController();
-    IconData selectedIcon = Icons.money;
+    IconData selectedIcon = Icons.attach_money;
 
     showDialog(
       context: context,
@@ -129,19 +129,125 @@ class _BalanceScreenState extends State<BalanceScreen> {
                   value: selectedIcon,
                   isExpanded: true,
                   items: const [
-                    DropdownMenuItem(value: Icons.money, child: Text("Dinero")),
-                    DropdownMenuItem(
-                      value: Icons.icecream,
-                      child: Text("Helado"),
-                    ),
-                    DropdownMenuItem(
-                      value: Icons.card_giftcard,
-                      child: Text("Regalo"),
-                    ),
-                    DropdownMenuItem(value: Icons.people, child: Text("Gente")),
                     DropdownMenuItem(
                       value: Icons.shopping_cart,
-                      child: Text("Carrito"),
+                      child: Row(
+                        children: [
+                          Icon(Icons.shopping_cart),
+                          SizedBox(width: 10),
+                          Text("Carrito de Compras"),
+                        ],
+                      ),
+                    ),
+                    DropdownMenuItem(
+                      value: Icons.cake,
+                      child: Row(
+                        children: [
+                          Icon(Icons.cake),
+                          SizedBox(width: 10),
+                          Text("Postre"),
+                        ],
+                      ),
+                    ),
+                    DropdownMenuItem(
+                      value: Icons.people,
+                      child: Row(
+                        children: [
+                          Icon(Icons.people),
+                          SizedBox(width: 10),
+                          Text("Personas"),
+                        ],
+                      ),
+                    ),
+                    DropdownMenuItem(
+                      value: Icons.attach_money,
+                      child: Row(
+                        children: [
+                          Icon(Icons.attach_money),
+                          SizedBox(width: 10),
+                          Text("Dinero"),
+                        ],
+                      ),
+                    ),
+                    DropdownMenuItem(
+                      value: Icons.home,
+                      child: Row(
+                        children: [
+                          Icon(Icons.home),
+                          SizedBox(width: 10),
+                          Text("Casa"),
+                        ],
+                      ),
+                    ),
+                    DropdownMenuItem(
+                      value: Icons.apartment,
+                      child: Row(
+                        children: [
+                          Icon(Icons.apartment),
+                          SizedBox(width: 10),
+                          Text("Renta"),
+                        ],
+                      ),
+                    ),
+                    DropdownMenuItem(
+                      value: Icons.restaurant,
+                      child: Row(
+                        children: [
+                          Icon(Icons.restaurant),
+                          SizedBox(width: 10),
+                          Text("Comida"),
+                        ],
+                      ),
+                    ),
+                    DropdownMenuItem(
+                      value: Icons.celebration,
+                      child: Row(
+                        children: [
+                          Icon(Icons.celebration),
+                          SizedBox(width: 10),
+                          Text("Fiesta"),
+                        ],
+                      ),
+                    ),
+                    DropdownMenuItem(
+                      value: Icons.favorite,
+                      child: Row(
+                        children: [
+                          Icon(Icons.favorite),
+                          SizedBox(width: 10),
+                          Text("Amor"),
+                        ],
+                      ),
+                    ),
+                    DropdownMenuItem(
+                      value: Icons.local_bar,
+                      child: Row(
+                        children: [
+                          Icon(Icons.local_bar),
+                          SizedBox(width: 10),
+                          Text("Bebidas"),
+                        ],
+                      ),
+                    ),
+                    DropdownMenuItem(
+                      value: Icons.inventory_2,
+                      child: Row(
+                        children: [
+                          Icon(Icons.inventory_2),
+                          SizedBox(width: 10),
+                          Text("Insumos"),
+                        ],
+                      ),
+                    ),
+                    DropdownMenuItem(
+                      value: Icons.category,
+                      child: Row(
+                        children: [
+                          Icon(Icons.category),
+                          SizedBox(width: 10),
+                          Text("General"),
+                        ],
+                      ),
                     ),
                   ],
                   onChanged: (icon) {
@@ -229,43 +335,84 @@ class _BalanceScreenState extends State<BalanceScreen> {
   Widget sectionList(List<MoneyItem> items, {required bool isGasto}) {
     return Padding(
       padding: const EdgeInsets.only(top: 20, bottom: 14, left: 30, right: 30),
-      child: Column(
-        children: items.map((item) {
-          return Padding(
-            padding: const EdgeInsets.only(
-              bottom: 10,
-            ), // Aquí está el margen visual
-            child: Slidable(
-              key: ValueKey(item.title),
-              endActionPane: ActionPane(
-                motion: const DrawerMotion(),
-                children: [
-                  SlidableAction(
-                    borderRadius: BorderRadius.circular(12),
-                    onPressed: (_) {
-                      setState(() {
-                        if (isGasto) {
-                          widget.gastos.remove(item);
-                        } else {
-                          widget.ingresos.remove(item);
-                        }
-                      });
-                    },
-                    backgroundColor: Colors.red,
-                    foregroundColor: Colors.white,
-                    icon: Icons.delete,
-                    label: 'Eliminar',
+      child: items.isEmpty
+          ? _buildEmptyState(isGasto)
+          : Column(
+              children: items.map((item) {
+                return Padding(
+                  padding: const EdgeInsets.only(
+                    bottom: 10,
+                  ), // Aquí está el margen visual
+                  child: Slidable(
+                    key: ValueKey(item.title),
+                    endActionPane: ActionPane(
+                      motion: const DrawerMotion(),
+                      children: [
+                        SlidableAction(
+                          borderRadius: BorderRadius.circular(12),
+                          onPressed: (_) {
+                            setState(() {
+                              if (isGasto) {
+                                widget.gastos.remove(item);
+                              } else {
+                                widget.ingresos.remove(item);
+                              }
+                            });
+                          },
+                          backgroundColor: Colors.red,
+                          foregroundColor: Colors.white,
+                          icon: Icons.delete,
+                          label: 'Eliminar',
+                        ),
+                      ],
+                    ),
+                    child: MoneyItem(
+                      icon: item.icon,
+                      title: item.title,
+                      amount: item.amount,
+                    ),
                   ),
-                ],
-              ),
-              child: MoneyItem(
-                icon: item.icon,
-                title: item.title,
-                amount: item.amount,
+                );
+              }).toList(),
+            ),
+    );
+  }
+
+  Widget _buildEmptyState(bool isGasto) {
+    return Container(
+      height: 120,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(12),
+        color: Colors.grey.shade100,
+        border: Border.all(color: Colors.grey.shade300, width: 1),
+      ),
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              isGasto ? Icons.money_off : Icons.account_balance_wallet_outlined,
+              size: 40,
+              color: Colors.grey.shade500,
+            ),
+            const SizedBox(height: 8),
+            Text(
+              isGasto
+                  ? 'No hay gastos registrados'
+                  : 'No hay ingresos registrados',
+              style: TextStyle(
+                fontSize: 16,
+                color: Colors.grey.shade600,
+                fontWeight: FontWeight.w500,
               ),
             ),
-          );
-        }).toList(),
+            const SizedBox(height: 4),
+            Text(
+              'Toca el botón + para agregar',
+              style: TextStyle(fontSize: 14, color: Colors.grey.shade500),
+            ),
+          ],
+        ),
       ),
     );
   }

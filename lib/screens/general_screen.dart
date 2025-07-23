@@ -101,14 +101,30 @@ class _GeneralScreenState extends State<GeneralScreen> {
                     child: Column(
                       children: [
                         const SizedBox(height: 8),
-                        const Text(
-                          "Último Ingreso",
-                          style: TextStyle(fontSize: 20),
+                        Text(
+                          widget.ingresos.isEmpty
+                              ? "Sin Ingresos"
+                              : "Último Ingreso",
+                          style: const TextStyle(fontSize: 20),
                         ),
                         const SizedBox(height: 8),
-                        Padding(
-                          padding: const EdgeInsets.all(10),
-                          child: widget.ingresos.last,
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.all(10),
+                            child: widget.ingresos.isEmpty
+                                ? const Center(
+                                    child: Text(
+                                      "No hay ingresos registrados",
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        color: Colors.grey,
+                                        fontStyle: FontStyle.italic,
+                                      ),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  )
+                                : widget.ingresos.last,
+                          ),
                         ),
                       ],
                     ),
@@ -165,14 +181,28 @@ class _GeneralScreenState extends State<GeneralScreen> {
                     child: Column(
                       children: [
                         const SizedBox(height: 8),
-                        const Text(
-                          "Último Gasto",
-                          style: TextStyle(fontSize: 20),
+                        Text(
+                          widget.gastos.isEmpty ? "Sin Gastos" : "Último Gasto",
+                          style: const TextStyle(fontSize: 20),
                         ),
                         const SizedBox(height: 8),
-                        Padding(
-                          padding: const EdgeInsets.all(10),
-                          child: widget.gastos.last,
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.all(10),
+                            child: widget.gastos.isEmpty
+                                ? const Center(
+                                    child: Text(
+                                      "No hay gastos registrados",
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        color: Colors.grey,
+                                        fontStyle: FontStyle.italic,
+                                      ),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  )
+                                : widget.gastos.last,
+                          ),
                         ),
                       ],
                     ),
@@ -198,38 +228,66 @@ class _GeneralScreenState extends State<GeneralScreen> {
                   style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 10),
-                SfCircularChart(
-                  legend: const Legend(
-                    borderColor: Colors.black,
-                    textStyle: TextStyle(fontSize: 14),
-                    isVisible: true,
-                    position: LegendPosition.bottom,
-                  ),
-                  series: <CircularSeries>[
-                    DoughnutSeries<ChartData, String>(
-                      pointColorMapper: (ChartData data, int index) =>
-                          customColors[index % customColors.length],
-                      dataSource: [
-                        ChartData("Ingresos", widget.ingresosTotal),
-                        ChartData("Gastos", widget.gastosTotal),
-                      ],
-                      xValueMapper: (ChartData data, _) => data.tipo,
-                      yValueMapper: (ChartData data, _) => data.valor,
-                      dataLabelMapper: (ChartData data, _) =>
-                          "${data.tipo}: \$${data.valor.toStringAsFixed(2)}",
-                      dataLabelSettings: const DataLabelSettings(
-                        isVisible: true,
-                      ),
-                      explode: true,
-                      explodeIndex: 1,
-                    ),
-                  ],
-                ),
+                _buildChart(),
               ],
             ),
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildChart() {
+    // Si no hay datos en ninguna de las dos listas
+    if (widget.ingresos.isEmpty && widget.gastos.isEmpty) {
+      return Container(
+        height: 200,
+        child: const Center(
+          child: Text(
+            "No hay datos para mostrar en la gráfica",
+            style: TextStyle(
+              fontSize: 18,
+              color: Colors.grey,
+              fontStyle: FontStyle.italic,
+            ),
+            textAlign: TextAlign.center,
+          ),
+        ),
+      );
+    }
+
+    // Crear lista de datos solo con los valores que existen
+    List<ChartData> chartData = [];
+
+    if (widget.ingresosTotal > 0) {
+      chartData.add(ChartData("Ingresos", widget.ingresosTotal));
+    }
+
+    if (widget.gastosTotal > 0) {
+      chartData.add(ChartData("Gastos", widget.gastosTotal));
+    }
+
+    return SfCircularChart(
+      legend: const Legend(
+        borderColor: Colors.black,
+        textStyle: TextStyle(fontSize: 14),
+        isVisible: true,
+        position: LegendPosition.bottom,
+      ),
+      series: <CircularSeries>[
+        DoughnutSeries<ChartData, String>(
+          pointColorMapper: (ChartData data, int index) =>
+              customColors[index % customColors.length],
+          dataSource: chartData,
+          xValueMapper: (ChartData data, _) => data.tipo,
+          yValueMapper: (ChartData data, _) => data.valor,
+          dataLabelMapper: (ChartData data, _) =>
+              "${data.tipo}: \$${data.valor.toStringAsFixed(2)}",
+          dataLabelSettings: const DataLabelSettings(isVisible: true),
+          explode: true,
+          explodeIndex: chartData.length > 1 ? 1 : 0,
+        ),
+      ],
     );
   }
 
