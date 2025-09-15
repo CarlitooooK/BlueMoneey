@@ -1,5 +1,5 @@
-import 'package:finestra_app/core/app_colors.dart';
-import 'package:finestra_app/core/info_item.dart';
+import 'package:finestra_app/core/constants/app_colors.dart';
+import 'package:finestra_app/core/constants/info_item.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 

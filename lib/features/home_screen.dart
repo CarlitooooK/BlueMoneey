@@ -1,12 +1,14 @@
 import 'dart:io';
+import 'package:finestra_app/features/pages/cards_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:finestra_app/core/app_colors.dart';
-import 'package:finestra_app/core/info_item.dart';
-import 'package:finestra_app/screens/balance_screen.dart';
-import 'package:finestra_app/screens/general_screen.dart';
-import 'package:finestra_app/screens/graphic_screen.dart';
-import 'package:finestra_app/screens/list_super_screen.dart';
+import 'package:finestra_app/core/constants/app_colors.dart';
+import 'package:finestra_app/core/constants/info_item.dart';
+import 'package:finestra_app/features/pages/balance_screen.dart';
+import 'package:finestra_app/features/pages/general_screen.dart';
+
+import 'pages/graphic_screen.dart';
+import 'pages/list_super_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -21,14 +23,14 @@ class _HomeScreenState extends State<HomeScreen> {
   List<MoneyItem> ingresos = [];
 
   double get totalGastos => gastos.fold(0, (sum, item) => sum + item.amount);
+
   double get totalIngresos =>
       ingresos.fold(0, (sum, item) => sum + item.amount);
 
   double get balance => totalIngresos - totalGastos;
 
   int _selectedIndex = 0;
-  PageController _pageController =
-      PageController(); // Controlador para PageView
+  final PageController _pageController = PageController();
 
   void navigateBottomBar(int index) {
     // Animar hacia la página seleccionada
@@ -69,6 +71,7 @@ class _HomeScreenState extends State<HomeScreen> {
         balance: balance,
       ),
       BalanceScreen(gastos: gastos, ingresos: ingresos),
+      CardsScreen(),
       GraphicScreen(gastos: gastos, ingresos: ingresos),
       ListSuperScreen(gastos: gastos),
     ];
@@ -108,8 +111,12 @@ class _HomeScreenState extends State<HomeScreen> {
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
           BottomNavigationBarItem(
-            icon: Icon(Icons.wallet_outlined),
+            icon: Icon(Icons.balance),
             label: "Balance",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.credit_card),
+            label: "Tarjetas",
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.auto_graph),
