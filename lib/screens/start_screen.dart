@@ -9,7 +9,8 @@ class StartScreen extends StatefulWidget {
   State<StartScreen> createState() => _StartScreenState();
 }
 
-class _StartScreenState extends State<StartScreen> with TickerProviderStateMixin {
+class _StartScreenState extends State<StartScreen>
+    with TickerProviderStateMixin {
   bool obscureText = true;
   TextEditingController myController = TextEditingController();
   AnimationController? _fadeController;
@@ -29,21 +30,14 @@ class _StartScreenState extends State<StartScreen> with TickerProviderStateMixin
       vsync: this,
     );
 
-    _fadeAnimation = Tween<double>(
-      begin: 0.0,
-      end: 1.0,
-    ).animate(CurvedAnimation(
-      parent: _fadeController!,
-      curve: Curves.easeInOut,
-    ));
+    _fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(parent: _fadeController!, curve: Curves.easeInOut),
+    );
 
-    _slideAnimation = Tween<Offset>(
-      begin: const Offset(0, 0.3),
-      end: Offset.zero,
-    ).animate(CurvedAnimation(
-      parent: _slideController!,
-      curve: Curves.easeOutBack,
-    ));
+    _slideAnimation =
+        Tween<Offset>(begin: const Offset(0, 0.3), end: Offset.zero).animate(
+          CurvedAnimation(parent: _slideController!, curve: Curves.easeOutBack),
+        );
 
     _fadeController!.forward();
     _slideController!.forward();
@@ -56,42 +50,6 @@ class _StartScreenState extends State<StartScreen> with TickerProviderStateMixin
     super.dispose();
   }
 
-  void checkUser() {
-    if (myController.text == "Carlo") {
-      Navigator.pushNamed(context, "/homepage");
-    } else {
-      showDialog<String>(
-        animationStyle: AnimationStyle(duration: Duration(milliseconds: 550)),
-        context: context,
-        builder: (BuildContext context) => AlertDialog(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20),
-          ),
-          title: const Text(
-            'Usuario Incorrecto',
-            style: TextStyle(fontWeight: FontWeight.bold),
-          ),
-          content: const Text('Ingrese un usuario registrado'),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () => Navigator.pop(context, 'OK'),
-              style: TextButton.styleFrom(
-                backgroundColor: AppColors.buttonColor,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-              ),
-              child: const Text(
-                'OK',
-                style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-              ),
-            ),
-          ],
-        ),
-      );
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -101,13 +59,14 @@ class _StartScreenState extends State<StartScreen> with TickerProviderStateMixin
           padding: const EdgeInsets.symmetric(horizontal: 24),
           child: Column(
             children: [
-              SizedBox(height: MediaQuery.of(context).size.height * 0.08),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.10),
 
               // Header con animación
               FadeTransition(
                 opacity: _fadeAnimation ?? AlwaysStoppedAnimation(1.0),
                 child: SlideTransition(
-                  position: _slideAnimation ?? AlwaysStoppedAnimation(Offset.zero),
+                  position:
+                      _slideAnimation ?? AlwaysStoppedAnimation(Offset.zero),
                   child: Column(
                     children: [
                       // Logo/Icono decorativo
@@ -126,7 +85,7 @@ class _StartScreenState extends State<StartScreen> with TickerProviderStateMixin
                           shape: BoxShape.circle,
                           boxShadow: [
                             BoxShadow(
-                              color: AppColors.buttonColor.withOpacity(0.3),
+                              color: AppColors.buttonColor.withAlpha(100),
                               blurRadius: 15,
                               offset: const Offset(0, 8),
                             ),
@@ -139,15 +98,12 @@ class _StartScreenState extends State<StartScreen> with TickerProviderStateMixin
                         ),
                       ),
 
-                      const SizedBox(height: 20),
+                      const SizedBox(height: 30),
 
                       // Título principal
                       ShaderMask(
                         shaderCallback: (bounds) => LinearGradient(
-                          colors: [
-                            Colors.black,
-                            Colors.black.withOpacity(0.8),
-                          ],
+                          colors: [Colors.black, Colors.black.withOpacity(0.8)],
                         ).createShader(bounds),
                         child: const Text(
                           "BlueMoney",
@@ -164,12 +120,15 @@ class _StartScreenState extends State<StartScreen> with TickerProviderStateMixin
 
                       // Subtítulo con estilo
                       Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 20,
+                          vertical: 8,
+                        ),
                         decoration: BoxDecoration(
-                          color: Colors.black.withOpacity(0.05),
+                          color: Colors.black.withAlpha(30),
                           borderRadius: BorderRadius.circular(25),
                           border: Border.all(
-                            color: Colors.black.withOpacity(0.1),
+                            color: Colors.black.withAlpha(10),
                             width: 1,
                           ),
                         ),
@@ -192,45 +151,19 @@ class _StartScreenState extends State<StartScreen> with TickerProviderStateMixin
               // Animación mejorada con marco
               FadeTransition(
                 opacity: _fadeAnimation ?? AlwaysStoppedAnimation(1.0),
-                child: Container(
-                  height: 280,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(25),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.1),
-                        blurRadius: 20,
-                        offset: const Offset(0, 10),
-                      ),
-                    ],
-                  ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(25),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                          colors: [
-                            Colors.white.withOpacity(0.1),
-                            Colors.transparent,
-                          ],
-                        ),
-                      ),
-                      child: Image.asset(
-                        "assets/gifs/bluey1.gif",
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
+                child: Image.asset(
+                  'assets/gifs/bluey1.gif',
+                  height: 250,
+                  fit: BoxFit.fitHeight,
                 ),
               ),
 
-              const SizedBox(height: 50),
+              const SizedBox(height: 70),
 
               // Sección de entrada mejorada
               SlideTransition(
-                position: _slideAnimation ?? AlwaysStoppedAnimation(Offset.zero),
+                position:
+                    _slideAnimation ?? AlwaysStoppedAnimation(Offset.zero),
                 child: Column(
                   children: [
                     // Título del campo con icono
@@ -238,13 +171,13 @@ class _StartScreenState extends State<StartScreen> with TickerProviderStateMixin
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Icon(
-                          Icons.login_rounded,
+                          Icons.rocket_launch_rounded,
                           color: AppColors.buttonColor,
                           size: 24,
                         ),
                         const SizedBox(width: 8),
                         const Text(
-                          "Ingresa tu usuario",
+                          "Empieza ahora",
                           style: TextStyle(
                             fontSize: 22,
                             fontWeight: FontWeight.bold,
@@ -255,96 +188,6 @@ class _StartScreenState extends State<StartScreen> with TickerProviderStateMixin
                     ),
 
                     const SizedBox(height: 25),
-
-                    // Campo de texto moderno
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(25),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.08),
-                            blurRadius: 15,
-                            offset: const Offset(0, 5),
-                          ),
-                        ],
-                      ),
-                      child: TextField(
-                        keyboardType: TextInputType.text,
-                        cursorColor: AppColors.buttonColor,
-                        obscureText: obscureText,
-                        controller: myController,
-                        textInputAction: TextInputAction.done,
-                        style: const TextStyle(
-                          color: Colors.black,
-                          fontSize: 18,
-                          fontWeight: FontWeight.w500,
-                        ),
-                        decoration: InputDecoration(
-                          filled: true,
-                          fillColor: Colors.white,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(25),
-                            borderSide: BorderSide.none,
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(25),
-                            borderSide: BorderSide(
-                              color: Colors.grey.withOpacity(0.2),
-                              width: 2,
-                            ),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(25),
-                            borderSide: BorderSide(
-                              color: AppColors.buttonColor,
-                              width: 2,
-                            ),
-                          ),
-                          prefixIcon: Container(
-                            margin: const EdgeInsets.all(8),
-                            decoration: BoxDecoration(
-                              color: AppColors.buttonColor.withOpacity(0.1),
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            child: Icon(
-                              Icons.person_rounded,
-                              color: AppColors.buttonColor,
-                            ),
-                          ),
-                          suffixIcon: Container(
-                            margin: const EdgeInsets.all(8),
-                            decoration: BoxDecoration(
-                              color: Colors.grey.withOpacity(0.1),
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            child: IconButton(
-                              icon: Icon(
-                                obscureText
-                                    ? Icons.visibility_off_rounded
-                                    : Icons.visibility_rounded,
-                                color: Colors.grey[600],
-                              ),
-                              onPressed: () {
-                                setState(() {
-                                  obscureText = !obscureText;
-                                });
-                              },
-                            ),
-                          ),
-                          hintText: 'Ingresa tu usuario',
-                          hintStyle: TextStyle(
-                            color: Colors.grey[500],
-                            fontSize: 16,
-                          ),
-                          contentPadding: const EdgeInsets.symmetric(
-                            horizontal: 20,
-                            vertical: 20,
-                          ),
-                        ),
-                      ),
-                    ),
-
-                    const SizedBox(height: 40),
 
                     // Botón moderno con gradiente
                     Container(
@@ -362,7 +205,7 @@ class _StartScreenState extends State<StartScreen> with TickerProviderStateMixin
                         borderRadius: BorderRadius.circular(30),
                         boxShadow: [
                           BoxShadow(
-                            color: AppColors.buttonColor.withOpacity(0.4),
+                            color: AppColors.buttonColor.withAlpha(200),
                             blurRadius: 15,
                             offset: const Offset(0, 8),
                           ),
@@ -370,7 +213,7 @@ class _StartScreenState extends State<StartScreen> with TickerProviderStateMixin
                       ),
                       child: ElevatedButton.icon(
                         onPressed: () {
-                          checkUser();
+                          Navigator.pushNamed(context, '/homepage');
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.transparent,
@@ -385,7 +228,7 @@ class _StartScreenState extends State<StartScreen> with TickerProviderStateMixin
                           size: 24,
                         ),
                         label: const Text(
-                          "Iniciar Sesión",
+                          "Iniciar",
                           style: TextStyle(
                             fontSize: 20,
                             color: Colors.white,

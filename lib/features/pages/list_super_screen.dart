@@ -11,7 +11,8 @@ class ListSuperScreen extends StatefulWidget {
   State<ListSuperScreen> createState() => _ListSuperScreenState();
 }
 
-class _ListSuperScreenState extends State<ListSuperScreen> with TickerProviderStateMixin {
+class _ListSuperScreenState extends State<ListSuperScreen>
+    with TickerProviderStateMixin {
   final TextEditingController myController = TextEditingController();
   final TextEditingController myController2 = TextEditingController();
   double currentValue = 1.0;
@@ -37,21 +38,13 @@ class _ListSuperScreenState extends State<ListSuperScreen> with TickerProviderSt
       vsync: this,
     );
 
-    _listAnimation = Tween<double>(
-      begin: 0.0,
-      end: 1.0,
-    ).animate(CurvedAnimation(
-      parent: _listController!,
-      curve: Curves.easeInOut,
-    ));
+    _listAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(parent: _listController!, curve: Curves.easeInOut),
+    );
 
-    _scaleAnimation = Tween<double>(
-      begin: 1.0,
-      end: 1.1,
-    ).animate(CurvedAnimation(
-      parent: _totalController!,
-      curve: Curves.elasticOut,
-    ));
+    _scaleAnimation = Tween<double>(begin: 1.0, end: 1.1).animate(
+      CurvedAnimation(parent: _totalController!, curve: Curves.elasticOut),
+    );
   }
 
   @override
@@ -112,10 +105,7 @@ class _ListSuperScreenState extends State<ListSuperScreen> with TickerProviderSt
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         gradient: LinearGradient(
-          colors: [
-            Colors.white,
-            Colors.white.withOpacity(0.95),
-          ],
+          colors: [Colors.white, Colors.white.withOpacity(0.95)],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
@@ -242,7 +232,10 @@ class _ListSuperScreenState extends State<ListSuperScreen> with TickerProviderSt
           const SizedBox(height: 20),
 
           _buildModernTextField(
-            const Icon(Icons.add_shopping_cart_outlined, color: AppColors.buttonColor,),
+            const Icon(
+              Icons.add_shopping_cart_outlined,
+              color: AppColors.buttonColor,
+            ),
             "Nombre del producto",
             TextInputType.text,
             myController,
@@ -251,7 +244,10 @@ class _ListSuperScreenState extends State<ListSuperScreen> with TickerProviderSt
           const SizedBox(height: 16),
 
           _buildModernTextField(
-            const Icon(Icons.attach_money_rounded, color: AppColors.buttonColor,),
+            const Icon(
+              Icons.attach_money_rounded,
+              color: AppColors.buttonColor,
+            ),
             "Costo por unidad/kilo",
             TextInputType.number,
             myController2,
@@ -291,7 +287,7 @@ class _ListSuperScreenState extends State<ListSuperScreen> with TickerProviderSt
                 activeTrackColor: AppColors.buttonColor,
                 inactiveTrackColor: Colors.grey.withOpacity(0.3),
                 thumbColor: AppColors.buttonColor,
-                overlayColor:AppColors.buttonColor,
+                overlayColor: AppColors.buttonColor,
                 thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 12),
                 overlayShape: const RoundSliderOverlayShape(overlayRadius: 20),
               ),
@@ -329,10 +325,7 @@ class _ListSuperScreenState extends State<ListSuperScreen> with TickerProviderSt
               icon: const Icon(Icons.add_rounded, size: 22),
               label: const Text(
                 "Agregar a la lista",
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
             ),
           ),
@@ -342,11 +335,11 @@ class _ListSuperScreenState extends State<ListSuperScreen> with TickerProviderSt
   }
 
   Widget _buildModernTextField(
-      Icon icon,
-      String hint,
-      TextInputType type,
-      TextEditingController controller,
-      ) {
+    Icon icon,
+    String hint,
+    TextInputType type,
+    TextEditingController controller,
+  ) {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
@@ -384,19 +377,13 @@ class _ListSuperScreenState extends State<ListSuperScreen> with TickerProviderSt
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(15),
             borderSide: const BorderSide(
-              color:AppColors.buttonColor,
+              color: AppColors.buttonColor,
               width: 2,
             ),
           ),
-          prefixIcon: Padding(
-            padding: const EdgeInsets.all(12),
-            child: icon,
-          ),
+          prefixIcon: Padding(padding: const EdgeInsets.all(12), child: icon),
           hintText: hint,
-          hintStyle: TextStyle(
-            color: Colors.grey[600],
-            fontSize: 16,
-          ),
+          hintStyle: TextStyle(color: Colors.grey[600], fontSize: 16),
           contentPadding: const EdgeInsets.symmetric(
             horizontal: 16,
             vertical: 16,
@@ -437,10 +424,7 @@ class _ListSuperScreenState extends State<ListSuperScreen> with TickerProviderSt
             const SizedBox(height: 8),
             Text(
               "Agrega productos para comenzar",
-              style: TextStyle(
-                fontSize: 14,
-                color: Colors.grey[500],
-              ),
+              style: TextStyle(fontSize: 14, color: Colors.grey[500]),
             ),
           ],
         ),
@@ -551,10 +535,7 @@ class _ListSuperScreenState extends State<ListSuperScreen> with TickerProviderSt
                           ],
                         ),
                       ),
-                      const Icon(
-                        Icons.drag_handle_rounded,
-                        color: Colors.grey,
-                      ),
+                      const Icon(Icons.drag_handle_rounded, color: Colors.grey),
                     ],
                   ),
                 ),
@@ -579,19 +560,13 @@ class _ListSuperScreenState extends State<ListSuperScreen> with TickerProviderSt
           shadowColor: Colors.black.withOpacity(0.2),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20),
-            side: const BorderSide(
-              color: AppColors.buttonColor,
-              width: 2,
-            ),
+            side: const BorderSide(color: AppColors.buttonColor, width: 2),
           ),
         ),
         icon: const Icon(Icons.add_to_photos_rounded, size: 24),
         label: const Text(
           "Agregar a gastos",
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-          ),
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
         ),
       ),
     );
@@ -646,10 +621,7 @@ class _ListSuperScreenState extends State<ListSuperScreen> with TickerProviderSt
       );
       _showSnackBar("Despensa agregada a los gastos");
     } else {
-      _showAlert(
-        "Alerta",
-        "Agregar al menos un producto primero",
-      );
+      _showAlert("Alerta", "Agregar al menos un producto primero");
     }
   }
 
@@ -679,24 +651,23 @@ class _ListSuperScreenState extends State<ListSuperScreen> with TickerProviderSt
       context: context,
       builder: (BuildContext context) => AlertDialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        title: Text(
-          title,
-          style: const TextStyle(fontWeight: FontWeight.bold),
-        ),
-        content: Text(
-          content,
-          style: const TextStyle(fontSize: 16),
-        ),
+        title: Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
+        content: Text(content, style: const TextStyle(fontSize: 16)),
         actions: <Widget>[
           TextButton(
             onPressed: () => Navigator.pop(context, 'OK'),
             style: TextButton.styleFrom(
               backgroundColor: AppColors.buttonColor,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
             ),
             child: const Text(
               'OK',
-              style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
         ],

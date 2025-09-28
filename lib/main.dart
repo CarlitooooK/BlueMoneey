@@ -1,5 +1,4 @@
 import 'package:finestra_app/features/home_screen.dart';
-import 'package:finestra_app/screens/register_screen.dart';
 import 'package:finestra_app/screens/start_screen.dart';
 import 'package:finestra_app/features/navigation/account_screen.dart';
 import 'package:finestra_app/features/navigation/settings_screen.dart';
@@ -27,7 +26,6 @@ class MyApp extends StatelessWidget {
         '/accountpage': (context) => AccountScreen(),
         '/settingspage': (context) => SettingsScreen(),
         '/startpage': (context) => StartScreen(),
-        '/registerpage': (context) => RegisterScreen(),
       },
     );
   }

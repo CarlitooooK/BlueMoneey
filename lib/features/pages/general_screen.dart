@@ -23,7 +23,8 @@ class GeneralScreen extends StatefulWidget {
   State<GeneralScreen> createState() => _GeneralScreenState();
 }
 
-class _GeneralScreenState extends State<GeneralScreen> with TickerProviderStateMixin {
+class _GeneralScreenState extends State<GeneralScreen>
+    with TickerProviderStateMixin {
   AnimationController? _balanceController;
   AnimationController? _cardController;
   AnimationController? _chartController;
@@ -56,37 +57,22 @@ class _GeneralScreenState extends State<GeneralScreen> with TickerProviderStateM
       vsync: this,
     );
 
-    _balanceAnimation = Tween<double>(
-      begin: 0.0,
-      end: 1.0,
-    ).animate(CurvedAnimation(
-      parent: _balanceController!,
-      curve: Curves.elasticOut,
-    ));
+    _balanceAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(parent: _balanceController!, curve: Curves.elasticOut),
+    );
 
-    _cardAnimation = Tween<double>(
-      begin: 0.0,
-      end: 1.0,
-    ).animate(CurvedAnimation(
-      parent: _cardController!,
-      curve: Curves.easeOutBack,
-    ));
+    _cardAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(parent: _cardController!, curve: Curves.easeOutBack),
+    );
 
-    _chartAnimation = Tween<double>(
-      begin: 0.0,
-      end: 1.0,
-    ).animate(CurvedAnimation(
-      parent: _chartController!,
-      curve: Curves.easeInOut,
-    ));
+    _chartAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(parent: _chartController!, curve: Curves.easeInOut),
+    );
 
-    _slideAnimation = Tween<Offset>(
-      begin: const Offset(0, 0.5),
-      end: Offset.zero,
-    ).animate(CurvedAnimation(
-      parent: _cardController!,
-      curve: Curves.easeOutCubic,
-    ));
+    _slideAnimation =
+        Tween<Offset>(begin: const Offset(0, 0.5), end: Offset.zero).animate(
+          CurvedAnimation(parent: _cardController!, curve: Curves.easeOutCubic),
+        );
   }
 
   void _startAnimations() {
@@ -119,16 +105,6 @@ class _GeneralScreenState extends State<GeneralScreen> with TickerProviderStateM
         child: CustomScrollView(
           slivers: [
             // Header moderno con SliverAppBar
-            SliverAppBar(
-              backgroundColor: Colors.transparent,
-              elevation: 0,
-              expandedHeight: 120,
-              floating: false,
-              pinned: true,
-              flexibleSpace: FlexibleSpaceBar(
-                background: _buildModernHeader(),
-              ),
-            ),
 
             // Contenido principal
             SliverPadding(
@@ -166,10 +142,7 @@ class _GeneralScreenState extends State<GeneralScreen> with TickerProviderStateM
         gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [
-            AppColors.primaryColor,
-            AppColors.primaryColor
-          ],
+          colors: [AppColors.primaryColor, AppColors.primaryColor],
         ),
         borderRadius: const BorderRadius.only(
           bottomLeft: Radius.circular(30),
@@ -219,10 +192,7 @@ class _GeneralScreenState extends State<GeneralScreen> with TickerProviderStateM
                   ),
                   Text(
                     "Resumen financiero",
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.white70,
-                    ),
+                    style: TextStyle(fontSize: 16, color: Colors.white70),
                   ),
                 ],
               ),
@@ -250,10 +220,7 @@ class _GeneralScreenState extends State<GeneralScreen> with TickerProviderStateM
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: [
-              balanceColor,
-              balanceColor.withOpacity(0.8),
-            ],
+            colors: [balanceColor, balanceColor.withOpacity(0.8)],
           ),
           borderRadius: BorderRadius.circular(25),
           boxShadow: [
@@ -269,11 +236,7 @@ class _GeneralScreenState extends State<GeneralScreen> with TickerProviderStateM
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(
-                  balanceIcon,
-                  color: Colors.white,
-                  size: 32,
-                ),
+                Icon(balanceIcon, color: Colors.white, size: 32),
                 const SizedBox(width: 12),
                 const Text(
                   "Balance Total",
@@ -302,7 +265,9 @@ class _GeneralScreenState extends State<GeneralScreen> with TickerProviderStateM
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Text(
-                widget.balance >= 0 ? "Situación favorable" : "Requiere atención",
+                widget.balance >= 0
+                    ? "Situación favorable"
+                    : "Requiere atención",
                 style: const TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.w500,
@@ -385,11 +350,7 @@ class _GeneralScreenState extends State<GeneralScreen> with TickerProviderStateM
                   color: color.withOpacity(0.1),
                   borderRadius: BorderRadius.circular(10),
                 ),
-                child: Icon(
-                  icon,
-                  color: color,
-                  size: 20,
-                ),
+                child: Icon(icon, color: color, size: 20),
               ),
               const SizedBox(width: 8),
               Expanded(
@@ -420,16 +381,15 @@ class _GeneralScreenState extends State<GeneralScreen> with TickerProviderStateM
           const SizedBox(height: 16),
 
           // Divisor
-          Container(
-            height: 1,
-            color: Colors.grey.withOpacity(0.2),
-          ),
+          Container(height: 1, color: Colors.grey.withOpacity(0.2)),
 
           const SizedBox(height: 16),
 
           // Último movimiento
           Text(
-            isEmpty ? emptyMessage : "Último ${title.toLowerCase().substring(0, title.length-1)}",
+            isEmpty
+                ? emptyMessage
+                : "Último ${title.toLowerCase().substring(0, title.length - 1)}",
             style: TextStyle(
               fontSize: 12,
               color: AppColors.textColor.withOpacity(0.7),
@@ -448,50 +408,50 @@ class _GeneralScreenState extends State<GeneralScreen> with TickerProviderStateM
             ),
             child: isEmpty
                 ? Text(
-              "No hay registros",
-              style: TextStyle(
-                fontSize: 12,
-                color: Colors.grey[600],
-                fontStyle: FontStyle.italic,
-              ),
-              textAlign: TextAlign.center,
-            )
+                    "No hay registros",
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: Colors.grey[600],
+                      fontStyle: FontStyle.italic,
+                    ),
+                    textAlign: TextAlign.center,
+                  )
                 : Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Icon(
-                      lastItem!.icon,
-                      size: 16,
-                      color: AppColors.textColor,
-                    ),
-                    const SizedBox(width: 6),
-                    Expanded(
-                      child: Text(
-                        lastItem.title,
-                        style: TextStyle(
-                          fontSize: 13,
-                          fontWeight: FontWeight.w500,
-                          color: AppColors.textColor,
-                        ),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Icon(
+                            lastItem!.icon,
+                            size: 16,
+                            color: AppColors.textColor,
+                          ),
+                          const SizedBox(width: 6),
+                          Expanded(
+                            child: Text(
+                              lastItem.title,
+                              style: TextStyle(
+                                fontSize: 13,
+                                fontWeight: FontWeight.w500,
+                                color: AppColors.textColor,
+                              ),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  "\$${lastItem.amount.toStringAsFixed(2)}",
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.bold,
-                    color: color,
+                      const SizedBox(height: 4),
+                      Text(
+                        "\$${lastItem.amount.toStringAsFixed(2)}",
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                          color: color,
+                        ),
+                      ),
+                    ],
                   ),
-                ),
-              ],
-            ),
           ),
         ],
       ),
@@ -595,10 +555,7 @@ class _GeneralScreenState extends State<GeneralScreen> with TickerProviderStateM
             const SizedBox(height: 8),
             Text(
               "Agrega ingresos o gastos para ver la gráfica",
-              style: TextStyle(
-                fontSize: 14,
-                color: Colors.grey[500],
-              ),
+              style: TextStyle(fontSize: 14, color: Colors.grey[500]),
               textAlign: TextAlign.center,
             ),
           ],
@@ -626,32 +583,36 @@ class _GeneralScreenState extends State<GeneralScreen> with TickerProviderStateM
             color: AppColors.textColor,
             fontWeight: FontWeight.w500,
           ),
-          legendItemBuilder: (String name, dynamic series, dynamic point, int index) {
-            return Container(
-              margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Container(
-                    width: 12,
-                    height: 12,
-                    decoration: BoxDecoration(
-                      color: customColors[index % customColors.length],
-                      shape: BoxShape.circle,
-                    ),
+          legendItemBuilder:
+              (String name, dynamic series, dynamic point, int index) {
+                return Container(
+                  margin: const EdgeInsets.symmetric(
+                    horizontal: 8,
+                    vertical: 4,
                   ),
-                  const SizedBox(width: 8),
-                  Text(
-                    name,
-                    style: TextStyle(
-                      color: AppColors.textColor,
-                      fontWeight: FontWeight.w500,
-                    ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Container(
+                        width: 12,
+                        height: 12,
+                        decoration: BoxDecoration(
+                          color: customColors[index % customColors.length],
+                          shape: BoxShape.circle,
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      Text(
+                        name,
+                        style: TextStyle(
+                          color: AppColors.textColor,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
-            );
-          },
+                );
+              },
         ),
         series: <CircularSeries>[
           DoughnutSeries<ChartData, String>(
@@ -659,9 +620,9 @@ class _GeneralScreenState extends State<GeneralScreen> with TickerProviderStateM
             xValueMapper: (ChartData data, _) => data.tipo,
             yValueMapper: (ChartData data, _) => data.valor,
             pointColorMapper: (ChartData data, int index) =>
-            customColors[index % customColors.length],
+                customColors[index % customColors.length],
             dataLabelMapper: (ChartData data, _) =>
-            "\$${data.valor.toStringAsFixed(0)}",
+                "\$${data.valor.toStringAsFixed(0)}",
             dataLabelSettings: DataLabelSettings(
               isVisible: true,
               labelPosition: ChartDataLabelPosition.outside,
@@ -715,8 +676,8 @@ class _GeneralScreenState extends State<GeneralScreen> with TickerProviderStateM
   }
 
   final List<Color> customColors = [
-    Colors.green[600]!,     // Para ingresos
-    Colors.red[600]!,       // Para gastos
+    Colors.green[600]!, // Para ingresos
+    Colors.red[600]!, // Para gastos
   ];
 }
 

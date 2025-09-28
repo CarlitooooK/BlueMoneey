@@ -110,10 +110,7 @@ class _HomeScreenState extends State<HomeScreen> {
         currentIndex: _selectedIndex,
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.balance),
-            label: "Balance",
-          ),
+          BottomNavigationBarItem(icon: Icon(Icons.balance), label: "Balance"),
           BottomNavigationBarItem(
             icon: Icon(Icons.credit_card),
             label: "Tarjetas",
